@@ -1,0 +1,8 @@
+
+2021-Jun/G1/SprintOne/src/main/resources/application.properties
+*.iml
+*.log
+CDS/crm-admin-service/mvnw
+CDS/crm-admin-service/mvnw.cmd
+CDS/crm-admin-service/.mvn/wrapper/maven-wrapper.properties
+CDS/crm-admin-service/.mvn/wrapper/MavenWrapperDownloader.java
