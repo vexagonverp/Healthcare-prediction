@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
+    public static final String BEARER_KEY_SECURITY_SCHEME = "bearer-key";
     @Value("${spring.application.name}")
     private String applicationName;
 
@@ -33,6 +34,4 @@ public class SwaggerConfig {
     public GroupedOpenApi actuatorApi() {
         return GroupedOpenApi.builder().group("actuator").pathsToMatch("/actuator/**").build();
     }
-
-    public static final String BEARER_KEY_SECURITY_SCHEME = "bearer-key";
 }
