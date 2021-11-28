@@ -2,9 +2,12 @@ package io.vexagonverp.healthcare.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.vexagonverp.healthcare.service.KeycloakClientConfig;
+import io.vexagonverp.healthcare.config.KeycloakClientConfig;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,14 +32,10 @@ public class AuthorizationServiceController {
     }
 
     @GetMapping("/users")
-    public List users() {
-//        String token = "Bearer " + keycloakTokenService.getAccessToken();
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.set("Authorization", token);
-//        HttpEntity<String> entity = new HttpEntity<>(headers);
-        return keycloakClientConfig.keycloak().realm(keycloakRealm).users().list();
-//        return restTemplate.exchange(URI.create(keycloakServerUrl + "/admin/realms/" + keycloakRealm + "/users"),
-//                HttpMethod.GET, entity, List.class);
+    public ResponseEntity<?> users() {
+        UserRepresentation userRepresentation = new UserRepresentation();
+        List<?> userRequest = keycloakClientConfig.keycloakApi().realm(keycloakRealm).users().list();
+        return new ResponseEntity<>(userRequest,HttpStatus.OK);
     }
 
     @Operation(summary = "Get string from public endpoint")

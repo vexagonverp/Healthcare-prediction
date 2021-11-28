@@ -1,4 +1,4 @@
-package io.vexagonverp.healthcare.security;
+package io.vexagonverp.healthcare.config;
 
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;

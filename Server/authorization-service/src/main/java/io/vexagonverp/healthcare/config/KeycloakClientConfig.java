@@ -1,4 +1,4 @@
-package io.vexagonverp.healthcare.service;
+package io.vexagonverp.healthcare.config;
 
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
@@ -29,7 +29,7 @@ public class KeycloakClientConfig {
     }
 
     @Bean
-    public Keycloak keycloak() {
+    public Keycloak keycloakApi() {
         return KeycloakBuilder.builder()
                 .grantType(OAuth2Constants.CLIENT_CREDENTIALS)
                 .serverUrl(keycloakServerUrl)
