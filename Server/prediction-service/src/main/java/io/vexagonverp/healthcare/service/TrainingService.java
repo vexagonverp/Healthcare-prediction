@@ -14,7 +14,6 @@ import org.deeplearning4j.nn.conf.layers.OutputLayer;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.nn.weights.WeightInit;
 import org.deeplearning4j.optimize.listeners.ScoreIterationListener;
-import org.nd4j.autodiff.listeners.records.EvaluationRecord;
 import org.nd4j.evaluation.classification.Evaluation;
 import org.nd4j.linalg.activations.Activation;
 import org.nd4j.linalg.api.ndarray.INDArray;
@@ -23,7 +22,6 @@ import org.nd4j.linalg.dataset.SplitTestAndTrain;
 import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.nd4j.linalg.dataset.api.preprocessor.DataNormalization;
 import org.nd4j.linalg.dataset.api.preprocessor.NormalizerStandardize;
-import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.learning.config.Adam;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 import org.slf4j.Logger;
@@ -31,13 +29,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.el.EvaluationListener;
 import java.io.IOException;
 import java.io.InputStream;
 
 @Service
 public class TrainingService {
-    private static Logger log = LoggerFactory.getLogger(TrainingService.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainingService.class);
     private static MultiLayerNetwork model;
     private static DataNormalization normalizer;
 
@@ -46,7 +43,7 @@ public class TrainingService {
 
     }
 
-    public DataNormalization getNormalizer(){
+    public DataNormalization getNormalizer() {
         return normalizer;
     }
 
@@ -123,7 +120,7 @@ public class TrainingService {
         model = new MultiLayerNetwork(conf);
         model.init();
         //model.setLearningRate(0.005);
-        model.setListeners(new ScoreIterationListener(iterations/10));
+        model.setListeners(new ScoreIterationListener(iterations / 10));
 
         for (int i = 0; i < iterations; i++) {
             model.fit(trainingData);
@@ -133,10 +130,10 @@ public class TrainingService {
         INDArray output = model.output(testData.getFeatures());
         evaluation.eval(testData.getLabels(), output);
 
-        log.info("Accuracy :\t"+evaluation.accuracy());
-        log.info("Precision :\t"+evaluation.precision());
-        log.info("Recall :\t"+evaluation.recall());
-        log.info("F1 Score :\t"+evaluation.f1());
+        log.info("Accuracy :\t" + evaluation.accuracy());
+        log.info("Precision :\t" + evaluation.precision());
+        log.info("Recall :\t" + evaluation.recall());
+        log.info("F1 Score :\t" + evaluation.f1());
 
         return model;
     }
