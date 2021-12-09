@@ -41,7 +41,7 @@ public class PredictionService {
 
 
     public HeartPredictionResponse predictionFromImport(HeartPredictionPayload heartPredictionPayload) {
-        MultiLayerNetwork model = getImportModel();
+        MultiLayerNetwork importModel = getImportModel();
 
         //Create input INDArray for the user measurements
         INDArray actualInput = Nd4j.zeros(1, 13);
@@ -58,7 +58,7 @@ public class PredictionService {
         actualInput.putScalar(new int[]{0, 10}, heartPredictionPayload.getSlope());
         actualInput.putScalar(new int[]{0, 11}, heartPredictionPayload.getCa());
         actualInput.putScalar(new int[]{0, 12}, heartPredictionPayload.getThal());
-        INDArray prediction = model.output(actualInput);
+        INDArray prediction = importModel.output(actualInput);
         double[] result = prediction.toDoubleVector();
         return new HeartPredictionResponse(result[0], result[1]);
     }
